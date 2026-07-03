@@ -1,0 +1,1314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Naman Jain — Hire Checkout | DODO Style</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --dodo-green: #07BC70;
+      --dodo-green-hover: #06a862;
+      --dodo-lime: #b8ff57;
+      --dodo-black: #1F2023;
+      --dodo-dark: #141516;
+      --dodo-card: #ffffff;
+      --dodo-muted: #6b7280;
+      --dodo-border: #e8eaed;
+      --dodo-pink: #ff4d9d;
+      --dodo-purple: #8b5cf6;
+      --dodo-amber: #fbbf24;
+      --radius: 20px;
+      --radius-sm: 12px;
+      --shadow: 0 8px 40px rgba(7, 188, 112, 0.12);
+      --shadow-card: 0 4px 24px rgba(31, 32, 35, 0.08);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: #f4fdf8;
+      color: var(--dodo-black);
+      min-height: 100vh;
+      overflow-x: hidden;
+      line-height: 1.55;
+    }
+
+    /* funky blobs */
+    .blobs {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0.45;
+      animation: blob-drift 12s ease-in-out infinite;
+    }
+    .blob.b1 { width: 320px; height: 320px; background: var(--dodo-lime); top: -80px; right: -60px; }
+    .blob.b2 { width: 280px; height: 280px; background: var(--dodo-green); bottom: 10%; left: -80px; animation-delay: -4s; }
+    .blob.b3 { width: 200px; height: 200px; background: var(--dodo-pink); top: 40%; right: 10%; opacity: 0.25; animation-delay: -7s; }
+    @keyframes blob-drift {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(20px, -30px) scale(1.08); }
+    }
+
+    /* NAV */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.82);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--dodo-border);
+      padding: 0.5rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-weight: 800;
+      font-size: 1.05rem;
+    }
+    .dodo-logo {
+      width: 30px;
+      height: 30px;
+      background: var(--dodo-green);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: white;
+      letter-spacing: -0.03em;
+      box-shadow: 0 4px 12px rgba(7, 188, 112, 0.35);
+    }
+    .nav-brand span { color: var(--dodo-green); }
+    .nav-pill {
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.35rem 0.85rem;
+      border-radius: 999px;
+      background: rgba(7, 188, 112, 0.12);
+      color: var(--dodo-green);
+      border: 1px solid rgba(7, 188, 112, 0.25);
+    }
+    .nav-pill::before {
+      content: '●';
+      margin-right: 5px;
+      animation: pulse-dot 1.5s infinite;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    .wrap {
+      position: relative;
+      z-index: 1;
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 0 1rem 3rem;
+    }
+
+    .screen-one {
+      min-height: calc(100dvh - 49px - 34px);
+      display: flex;
+      align-items: center;
+      padding: 0.75rem 0 1rem;
+    }
+
+    /* HERO CHECKOUT CARD */
+    .checkout-hero {
+      background: var(--dodo-card);
+      border-radius: 16px;
+      box-shadow: var(--shadow-card);
+      border: 1px solid var(--dodo-border);
+      overflow: hidden;
+      margin-bottom: 1.25rem;
+      width: 100%;
+    }
+    .checkout-hero.compact { margin-bottom: 0; }
+
+    .checkout-top {
+      background: linear-gradient(135deg, var(--dodo-green), #05d480);
+      padding: 1rem 1.1rem;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+    .checkout-top::after {
+      content: '';
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      background: rgba(255,255,255,0.12);
+      border-radius: 50%;
+      top: -40px;
+      right: -30px;
+    }
+    .checkout-top .tag {
+      display: inline-block;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      background: rgba(255,255,255,0.2);
+      padding: 0.2rem 0.5rem;
+      border-radius: 999px;
+      margin-bottom: 0.25rem;
+    }
+    .top-row {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      text-align: left;
+    }
+    .checkout-top h1 {
+      font-size: 1.45rem;
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 0.1rem;
+    }
+    .checkout-top p {
+      font-size: 0.78rem;
+      opacity: 0.92;
+    }
+    .checkout-body {
+      padding: 0.85rem 1rem 1rem;
+      text-align: center;
+    }
+    .avatar-ring {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--dodo-lime), var(--dodo-green));
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--dodo-black);
+      border: 3px solid white;
+      box-shadow: var(--shadow);
+    }
+    .hero-teaser {
+      margin-bottom: 0.65rem;
+    }
+    .founder-badge {
+      display: block;
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: var(--dodo-pink);
+      background: linear-gradient(90deg, rgba(255,77,157,0.1), rgba(7,188,112,0.1));
+      border: 1px dashed var(--dodo-pink);
+      padding: 0.3rem 0.6rem;
+      border-radius: 8px;
+      margin-bottom: 0.5rem;
+    }
+    .hero-hook {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--dodo-black);
+      line-height: 1.35;
+      margin-bottom: 0.5rem;
+    }
+    .hero-hook em {
+      font-style: normal;
+      color: var(--dodo-green);
+    }
+    .mystery-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      justify-content: center;
+      margin-bottom: 0.6rem;
+    }
+    .mystery-chips span {
+      font-size: 0.68rem;
+      font-weight: 600;
+      color: var(--dodo-muted);
+      padding: 0.3rem 0.55rem;
+      background: #f9fafb;
+      border: 1px solid var(--dodo-border);
+      border-radius: 999px;
+    }
+    .mystery-chips span::before {
+      content: '';
+      display: inline-block;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--dodo-green);
+      margin-right: 5px;
+      vertical-align: middle;
+    }
+    .hero-sub {
+      font-size: 0.75rem;
+      color: var(--dodo-muted);
+      margin-bottom: 0.65rem;
+    }
+    .value-pitch {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--dodo-black);
+      background: linear-gradient(90deg, rgba(7,188,112,0.12), rgba(184,255,87,0.2));
+      border: 1px solid rgba(7, 188, 112, 0.3);
+      border-radius: 8px;
+      padding: 0.4rem 0.55rem;
+      margin-bottom: 0.5rem;
+      line-height: 1.4;
+    }
+    .value-pitch strong { color: var(--dodo-green); }
+
+    .growth-card {
+      border-left: 4px solid var(--dodo-lime);
+      background: linear-gradient(135deg, #f0fdf4, #fff);
+    }
+    .growth-card h3 { color: var(--dodo-black); }
+    .growth-equation {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin: 0.6rem 0 0.5rem;
+    }
+    .growth-equation span {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.3rem 0.55rem;
+      border-radius: 6px;
+      background: var(--dodo-black);
+      color: var(--dodo-lime);
+    }
+    .growth-equation span.alt {
+      background: rgba(7, 188, 112, 0.15);
+      color: var(--dodo-green);
+    }
+
+    .click-btn {
+      font-family: inherit;
+      font-size: 0.92rem;
+      font-weight: 700;
+      padding: 0.75rem 1.25rem;
+      border: none;
+      border-radius: 999px;
+      background: var(--dodo-black);
+      color: white;
+      cursor: pointer;
+      width: 100%;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 16px rgba(31, 32, 32, 0.22);
+    }
+    .click-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(31, 32, 35, 0.28);
+    }
+    .click-btn:active { transform: scale(0.98); }
+
+    .click-status {
+      margin-top: 0.5rem;
+      font-size: 0.8rem;
+      color: var(--dodo-green);
+      min-height: 1.1rem;
+      font-weight: 600;
+    }
+    .click-dots {
+      display: flex;
+      gap: 0.35rem;
+      justify-content: center;
+      margin-top: 0.4rem;
+    }
+    .click-dots span {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--dodo-border);
+      transition: background 0.25s, transform 0.25s;
+    }
+    .click-dots span.on {
+      background: var(--dodo-green);
+      transform: scale(1.15);
+    }
+
+    /* REVEAL SECTION */
+    .reveal {
+      display: none;
+      flex-direction: column;
+      gap: 1rem;
+      animation: pop-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+    .reveal.visible { display: flex; }
+
+    @keyframes pop-in {
+      from { opacity: 0; transform: scale(0.96) translateY(16px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .card {
+      background: var(--dodo-card);
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--dodo-border);
+      padding: 1.25rem 1.35rem;
+      box-shadow: var(--shadow-card);
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(7, 188, 112, 0.35);
+    }
+
+    .timeline-card {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+    .timeline-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      flex-shrink: 0;
+    }
+    .timeline-icon.red { background: #fee2e2; color: #dc2626; }
+    .timeline-icon.green { background: rgba(7, 188, 112, 0.15); color: var(--dodo-green); }
+    .timeline-icon.amber { background: #fef3c7; }
+
+    .card h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.35rem;
+    }
+    .card p {
+      font-size: 0.9rem;
+      color: var(--dodo-muted);
+      line-height: 1.65;
+    }
+    .card p strong { color: var(--dodo-black); }
+
+    .status-chip {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.2rem 0.5rem;
+      border-radius: 6px;
+      margin-bottom: 0.4rem;
+    }
+    .status-chip.failed { background: #fee2e2; color: #dc2626; }
+    .status-chip.patched { background: #fef3c7; color: #d97706; }
+    .status-chip.active { background: rgba(7, 188, 112, 0.15); color: var(--dodo-green); }
+
+    .skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.65rem;
+    }
+    .skill {
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.3rem 0.65rem;
+      border-radius: 999px;
+      background: #f0fdf4;
+      color: var(--dodo-green);
+      border: 1px solid rgba(7, 188, 112, 0.25);
+    }
+
+    .section-head {
+      font-size: 1.35rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--dodo-black);
+      text-align: center;
+      margin: 0.75rem 0 0.15rem;
+    }
+    .section-head .mock-badge {
+      display: inline-block;
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--dodo-muted);
+      vertical-align: middle;
+      margin-left: 0.35rem;
+    }
+    .section-sub {
+      text-align: center;
+      font-size: 0.88rem;
+      color: var(--dodo-muted);
+      margin-bottom: 0.35rem;
+      line-height: 1.5;
+      max-width: 420px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .exp-jab {
+      text-align: center;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--dodo-pink);
+      background: linear-gradient(90deg, transparent, rgba(255,77,157,0.08), transparent);
+      padding: 0.5rem 0.75rem;
+      margin-bottom: 0.5rem;
+      border-radius: 8px;
+    }
+
+    /* PROJECT PRODUCT CARDS */
+    .product-card {
+      cursor: pointer;
+      user-select: none;
+      border-left: 4px solid var(--dodo-green);
+    }
+    .product-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+    .product-price {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--dodo-green);
+      background: rgba(7, 188, 112, 0.1);
+      padding: 0.25rem 0.55rem;
+      border-radius: 6px;
+      white-space: nowrap;
+    }
+    .product-name {
+      font-weight: 700;
+      font-size: 1.02rem;
+      margin-bottom: 0.2rem;
+    }
+    .product-tagline {
+      font-size: 0.85rem;
+      color: var(--dodo-green);
+      font-weight: 600;
+    }
+    .tap {
+      font-size: 0.72rem;
+      color: var(--dodo-muted);
+      font-weight: 600;
+    }
+    .product-card:hover .tap { color: var(--dodo-pink); }
+
+    .product-details {
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition: max-height 0.35s ease, opacity 0.3s, margin 0.3s;
+    }
+    .product-card.open .product-details {
+      max-height: 420px;
+      opacity: 1;
+      margin-top: 0.75rem;
+      padding-top: 0.75rem;
+      border-top: 1px dashed var(--dodo-border);
+    }
+    .product-card.open .tap::after { content: ' · hide'; }
+    .product-card:not(.open) .tap::after { content: ' · show'; }
+    .mystery-chips span b {
+      filter: blur(2.5px);
+      font-weight: 600;
+    }
+
+    .check-list {
+      list-style: none;
+      margin-top: 0.5rem;
+    }
+    .check-list li {
+      position: relative;
+      padding-left: 1rem;
+      margin-bottom: 0.35rem;
+      font-size: 0.9rem;
+      color: var(--dodo-muted);
+    }
+    .check-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.55em;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--dodo-green);
+    }
+
+    .voice-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.35rem;
+    }
+    .voice-label.exp { color: var(--dodo-muted); }
+    .voice-label.naman { color: var(--dodo-green); margin-top: 0.85rem; }
+
+    .exp-voice {
+      font-size: 0.88rem;
+      color: var(--dodo-muted);
+      line-height: 1.65;
+      padding: 0.65rem 0.75rem;
+      background: #f9fafb;
+      border-radius: 8px;
+      border-left: 3px solid #d1d5db;
+    }
+    .exp-voice strong { color: var(--dodo-black); font-weight: 600; }
+
+    .naman-voice {
+      font-size: 0.88rem;
+      color: var(--dodo-black);
+      line-height: 1.65;
+      padding: 0.65rem 0.75rem;
+      background: rgba(7, 188, 112, 0.06);
+      border-radius: 8px;
+      border-left: 3px solid var(--dodo-green);
+      font-style: italic;
+    }
+
+    .hinglish {
+      background: linear-gradient(135deg, #fffbeb, #fdf2f8);
+      border: 2px dashed var(--dodo-amber);
+      border-radius: var(--radius-sm);
+      padding: 1.25rem;
+      text-align: center;
+    }
+    .hinglish .big {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--dodo-black);
+      margin-bottom: 0.5rem;
+    }
+    .hinglish p {
+      font-size: 0.92rem;
+      color: var(--dodo-muted);
+      line-height: 1.7;
+    }
+    .hinglish strong { color: var(--dodo-black); }
+
+    /* DODO PAYMENT CHECKOUT */
+    .pay-checkout {
+      background: var(--dodo-card);
+      border-radius: var(--radius);
+      border: 2px solid var(--dodo-green);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .pay-head {
+      background: var(--dodo-black);
+      color: white;
+      padding: 1rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .pay-head h3 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .pay-secure {
+      font-size: 0.68rem;
+      color: var(--dodo-lime);
+      font-weight: 600;
+    }
+    .pay-rows { padding: 1.15rem 1.25rem; }
+    .pay-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.55rem 0;
+      font-size: 0.88rem;
+      border-bottom: 1px solid var(--dodo-border);
+    }
+    .pay-row:last-of-type { border-bottom: none; }
+    .pay-row span:first-child { color: var(--dodo-muted); }
+    .pay-row span:last-child { font-weight: 600; }
+    .pay-row.total {
+      font-size: 1.05rem;
+      font-weight: 800;
+      padding-top: 0.75rem;
+      margin-top: 0.25rem;
+      border-top: 2px dashed var(--dodo-border);
+      border-bottom: none;
+    }
+    .pay-row.total span:last-child { color: var(--dodo-green); font-size: 1.2rem; }
+
+    .slider-box {
+      padding: 0 1.25rem 1.15rem;
+    }
+    .slider-box label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      margin-bottom: 0.5rem;
+      color: var(--dodo-muted);
+    }
+    .slider-box label strong { color: var(--dodo-black); }
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--dodo-green);
+      cursor: pointer;
+      height: 6px;
+    }
+    .slider-msg {
+      font-size: 0.82rem;
+      color: var(--dodo-green);
+      font-weight: 600;
+      margin-top: 0.5rem;
+      min-height: 2.2rem;
+      line-height: 1.45;
+    }
+
+    .pay-methods {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      padding: 0 1.25rem 1.15rem;
+    }
+    .pay-method {
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 0.35rem 0.7rem;
+      border-radius: 8px;
+      border: 1px solid var(--dodo-border);
+      color: var(--dodo-muted);
+      background: #fafafa;
+    }
+    .pay-method.on {
+      border-color: var(--dodo-green);
+      background: rgba(7, 188, 112, 0.08);
+      color: var(--dodo-green);
+    }
+
+    .pay-footer {
+      background: #f9fafb;
+      padding: 0.85rem 1.25rem;
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--dodo-muted);
+      border-top: 1px solid var(--dodo-border);
+    }
+    .pay-footer strong { color: var(--dodo-green); }
+
+    /* CTA */
+    .cta {
+      background: linear-gradient(135deg, var(--dodo-black), #2d2f33);
+      border-radius: var(--radius);
+      padding: 1.75rem 1.5rem;
+      text-align: center;
+      color: white;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.85rem;
+    }
+    .cta.visible { display: flex; }
+
+    .cta h2 {
+      font-size: 1.35rem;
+      font-weight: 800;
+    }
+    .cta p.sub {
+      font-size: 0.88rem;
+      opacity: 0.75;
+      max-width: 340px;
+    }
+
+    .hire-letter {
+      width: 100%;
+      max-width: 480px;
+      text-align: left;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(7, 188, 112, 0.35);
+      border-radius: var(--radius-sm);
+      padding: 1.15rem 1.25rem;
+      font-size: 0.88rem;
+      line-height: 1.75;
+      color: rgba(255, 255, 255, 0.9);
+    }
+    .hire-letter p { margin-bottom: 0.65rem; }
+    .hire-letter p:last-child { margin-bottom: 0; }
+    .hire-letter .sig {
+      margin-top: 0.85rem;
+      color: var(--dodo-lime);
+      font-weight: 600;
+    }
+    .hire-letter .punch {
+      margin-top: 0.75rem;
+      padding: 0.6rem 0.75rem;
+      background: rgba(7, 188, 112, 0.15);
+      border-radius: 8px;
+      font-weight: 700;
+      color: var(--dodo-lime);
+      text-align: center;
+    }
+
+    .pay-btn {
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 700;
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 999px;
+      background: var(--dodo-green);
+      color: white;
+      cursor: pointer;
+      width: 100%;
+      max-width: 320px;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 6px 24px rgba(7, 188, 112, 0.4);
+    }
+    .pay-btn:hover {
+      background: var(--dodo-green-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 32px rgba(7, 188, 112, 0.45);
+    }
+
+    .links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .links a {
+      color: var(--dodo-lime);
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .links a:hover { text-decoration: underline; }
+
+    footer {
+      margin-top: 2rem;
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--dodo-muted);
+    }
+
+    .confetti {
+      position: fixed;
+      pointer-events: none;
+      z-index: 999;
+      animation: fall 1.4s ease forwards;
+    }
+    @keyframes fall {
+      to { transform: translateY(100vh) rotate(540deg); opacity: 0; }
+    }
+
+    /* MOVING TAGLINES */
+    .marquee-bar {
+      position: relative;
+      z-index: 2;
+      background: var(--dodo-black);
+      color: var(--dodo-lime);
+      overflow: hidden;
+      padding: 0.45rem 0;
+      border-bottom: 1px solid rgba(7, 188, 112, 0.25);
+    }
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      animation: marquee 28s linear infinite;
+      gap: 2.5rem;
+      padding-left: 2.5rem;
+    }
+    .marquee-track span {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+      opacity: 0.95;
+    }
+    .marquee-track span.hot {
+      color: var(--dodo-green);
+      font-weight: 700;
+    }
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .float-tags {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .float-tag {
+      position: absolute;
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 0.35rem 0.7rem;
+      border-radius: 999px;
+      white-space: nowrap;
+      opacity: 0;
+      border: 1px solid rgba(7, 188, 112, 0.35);
+      background: rgba(255, 255, 255, 0.75);
+      color: var(--dodo-black);
+      backdrop-filter: blur(6px);
+      animation: float-tag 18s ease-in-out infinite;
+    }
+    .float-tag.accent {
+      background: rgba(7, 188, 112, 0.12);
+      color: var(--dodo-green);
+      border-color: var(--dodo-green);
+    }
+    .float-tag.t1 { top: 18%; left: -20%; animation-duration: 22s; animation-delay: 0s; }
+    .float-tag.t2 { top: 32%; left: -30%; animation-duration: 26s; animation-delay: -4s; }
+    .float-tag.t3 { top: 48%; left: -25%; animation-duration: 20s; animation-delay: -8s; }
+    .float-tag.t4 { top: 62%; left: -35%; animation-duration: 24s; animation-delay: -2s; }
+    .float-tag.t5 { top: 78%; left: -28%; animation-duration: 21s; animation-delay: -6s; }
+    .float-tag.t6 { top: 88%; left: -22%; animation-duration: 23s; animation-delay: -10s; }
+    @keyframes float-tag {
+      0% { transform: translateX(0) translateY(0); opacity: 0; }
+      8% { opacity: 0.85; }
+      50% { transform: translateX(115vw) translateY(-12px); opacity: 0.7; }
+      92% { opacity: 0.85; }
+      100% { transform: translateX(130vw) translateY(8px); opacity: 0; }
+    }
+
+    .dodo-highlight {
+      background: linear-gradient(135deg, var(--dodo-black), #2a2d31);
+      color: white;
+      border-radius: var(--radius-sm);
+      padding: 1.1rem 1.25rem;
+      text-align: center;
+      border: 1px solid rgba(7, 188, 112, 0.4);
+      box-shadow: 0 8px 32px rgba(7, 188, 112, 0.15);
+    }
+    .dodo-highlight .lead {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--dodo-lime);
+      line-height: 1.4;
+      margin-bottom: 0.5rem;
+    }
+    .dodo-highlight p {
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.78);
+      line-height: 1.55;
+    }
+    .dodo-highlight .can-will {
+      display: inline-block;
+      margin-top: 0.65rem;
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--dodo-green);
+      border: 1px solid var(--dodo-green);
+      padding: 0.3rem 0.75rem;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="blobs">
+    <div class="blob b1"></div>
+    <div class="blob b2"></div>
+    <div class="blob b3"></div>
+  </div>
+
+  <div class="float-tags" aria-hidden="true">
+    <span class="float-tag accent t1">Dodo me ek Naman to hona chahiye na</span>
+    <span class="float-tag t2">Built to help DODO grow</span>
+    <span class="float-tag accent t3">Can and Will</span>
+    <span class="float-tag t4">Global CEO ne mauka diya — dam to hoga bande me</span>
+    <span class="float-tag t5">Low cost · High delivery · DODO scales</span>
+    <span class="float-tag accent t6">Startup growth hire</span>
+  </div>
+
+  <nav class="nav">
+    <div class="nav-brand">
+      <div class="dodo-logo">D</div>
+      DODO <span>× Naman</span>
+    </div>
+    <span class="nav-pill">Open to work</span>
+  </nav>
+
+  <div class="marquee-bar" aria-hidden="true">
+    <div class="marquee-track">
+      <span class="hot">Dodo me ek Naman to hona chahiye na</span>
+      <span>Can and Will</span>
+      <span class="hot">Agar Global CEO ne mauka diya — matlab dam to hoga bande me</span>
+      <span>Built to help DODO grow</span>
+      <span>Low pay &lt; Experienced · Better work &gt; Experienced</span>
+      <span class="hot">Dodo me ek Naman to hona chahiye na</span>
+      <span>Can and Will</span>
+      <span class="hot">Agar Global CEO ne mauka diya — matlab dam to hoga bande me</span>
+      <span>Built to help DODO grow</span>
+      <span>Low pay &lt; Experienced · Better work &gt; Experienced</span>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+    <div class="screen-one" id="screenOne">
+    <div class="checkout-hero compact">
+      <div class="checkout-top">
+        <div class="top-row">
+          <div class="avatar-ring">NJ</div>
+          <div>
+            <div class="tag">Checkout incomplete</div>
+            <h1>Hey, I'm Naman</h1>
+            <p>PM · Not the Experienced™ pick</p>
+          </div>
+        </div>
+      </div>
+      <div class="checkout-body">
+        <div class="hero-teaser">
+          <span class="founder-badge">Founder? 3 clicks unlocks everything — stay.</span>
+          <p class="hero-hook">You pitch till funding hits. <em>Same grind here.</em></p>
+          <p class="value-pitch">Low pay &lt; Experienced™ · Better work &gt; Experienced™ · <strong>Startup growth</strong></p>
+          <div class="mystery-chips">
+            <span><b>1-wk demo</b></span>
+            <span><b>save cost</b></span>
+            <span><b>ship more</b></span>
+          </div>
+          <p class="hero-sub"><strong>3 clicks</strong> → story → hire checkout</p>
+        </div>
+        <button class="click-btn" id="mainBtn" onclick="revealStory()">
+          Click to unlock
+        </button>
+        <p class="click-status" id="clickStatus">3 clicks to unlock</p>
+        <div class="click-dots" id="clickDots">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+    </div>
+
+    <div class="reveal" id="reveal">
+
+      <div class="dodo-highlight">
+        <p class="lead">Dodo me ek Naman to hona chahiye na.</p>
+        <p>Agar Global CEO ne mauka diya — matlab dam to hoga bande me. I help DODO save cost, ship faster, and grow like a startup should.</p>
+        <span class="can-will">Can and Will</span>
+      </div>
+
+      <div class="card timeline-card">
+        <div class="timeline-icon red">01</div>
+        <div>
+          <span class="status-chip failed">Transaction failed</span>
+          <h3>Plot Twist #1 — Got laid off</h3>
+          <p>One day Handling Projects, next day refreshing LinkedIn like a slot machine. <strong>Plot twist:</strong> I'm not broken — I'm rebooting.</p>
+        </div>
+      </div>
+
+      <div class="card timeline-card">
+        <div class="timeline-icon red">02</div>
+        <div>
+          <span class="status-chip patched">Refund pending</span>
+          <h3>Plot Twist #2 — Lost an offer</h3>
+          <p>Had an offer in hand. Then... didn't took it in believe that I will Loose my Foundational Role <strong>I don't stay down.</strong> Recalibrate, rebuild, come back harder.</p>
+        </div>
+      </div>
+
+      <div class="card timeline-card">
+        <div class="timeline-icon green">03</div>
+        <div>
+          <span class="status-chip active">Status: Ready</span>
+          <h3>Manages projects better than veterans</h3>
+          <p>Professional. Certified. Polished. Deadlines fear me. Chaos respects me. Stakeholders actually reply to my emails.</p>
+          <div class="skills">
+            <span class="skill">Project Management</span>
+            <span class="skill">Agile / Scrum</span>
+            <span class="skill">AI / Agents</span>
+            <span class="skill">Enterprise ECM</span>
+            <span class="skill">Delivery</span>
+            <span class="skill">Stakeholders</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card growth-card">
+        <span class="status-chip active">Startup math</span>
+        <h3>You're paying premium for Experienced™ — but you need to save &amp; grow</h3>
+        <div class="growth-equation">
+          <span>Low pay &lt; Experienced™</span>
+          <span class="alt">Better work &gt; Experienced™</span>
+          <span>→ Startup growth</span>
+        </div>
+        <p>Right now you need <strong>cost-efficient hiring</strong> — not another expensive "experienced" line item. I cost less. I deliver more. That's the hire that actually helps a startup scale. <strong>I'm that only.</strong></p>
+      </div>
+
+      <h2 class="section-head">Experienced<span class="mock-badge">™</span></h2>
+      <p class="section-sub">Professional section title. Founders love this word — usually right before they hire someone else.</p>
+      <p class="exp-jab">Tap any project — upar <strong>Experienced™</strong> bolega, niche main samjhaunga.</p>
+
+      <div class="card product-card" onclick="toggleProduct(this)">
+        <div class="product-top">
+          <div>
+            <div class="product-name">AgentBenchx</div>
+            <div class="product-tagline">"Which AI agent is actually worth it?"</div>
+          </div>
+          <span class="product-price">SHIPPED</span>
+        </div>
+        <span class="tap">details</span>
+        <div class="product-details">
+          <div class="voice-label exp">Experienced™ says</div>
+          <p class="exp-voice">Led delivery of an <strong>enterprise benchmarking platform</strong> enabling cross-vendor evaluation of AI agent frameworks and <strong>Agent Development Kits (ADKs)</strong> — driving data-informed vendor selection and accelerating multi-agent initiatives to production.</p>
+          <div class="voice-label naman">Naman says</div>
+          <p class="naman-voice">Agent ka report card. Kaun fast hai, kaun smart hai, kaun flop — sab ek jagah.</p>
+        </div>
+      </div>
+
+      <div class="card product-card" onclick="toggleProduct(this)">
+        <div class="product-top">
+          <div>
+            <div class="product-name">AI Log Analyzer</div>
+            <div class="product-tagline">"Logs bolo, bug pakdo."</div>
+          </div>
+          <span class="product-price">SHIPPED</span>
+        </div>
+        <span class="tap">details</span>
+        <div class="product-details">
+          <div class="voice-label exp">Experienced™ says</div>
+          <p class="exp-voice">Orchestrated a <strong>centralized log analytics solution</strong> aggregating telemetry across heterogeneous codebases, delivering actionable intelligence via executive dashboards to reduce mean-time-to-resolution and improve engineering velocity.</p>
+          <div class="voice-label naman">Naman says</div>
+          <p class="naman-voice">Raat ko 2 baje log khodne ki jagah — dashboard kholo, bug mil jayega. Dev team ko neend bhi, fix bhi.</p>
+        </div>
+      </div>
+
+      <div class="card product-card" onclick="toggleProduct(this)">
+        <div class="product-top">
+          <div>
+            <div class="product-name">Documentum</div>
+            <div class="product-tagline">"Google Drive for business workflows"</div>
+          </div>
+          <span class="product-price">SHIPPED</span>
+        </div>
+        <span class="tap">details</span>
+        <div class="product-details">
+          <div class="voice-label exp">Experienced™ says</div>
+          <p class="exp-voice">Managed rollout of an <strong>enterprise content management platform</strong> encompassing HR workflow automation, contract lifecycle management, and governed document workflows — compliant, audit-ready, and aligned with stakeholder SLAs.</p>
+          <div class="voice-label naman">Naman says</div>
+          <p class="naman-voice"><strong>Google Drive for business workflows.</strong> Contracts, HR forms, approvals — sab ek jagah, koi file kho nahi jayegi.</p>
+        </div>
+      </div>
+
+      <div class="card product-card" onclick="toggleProduct(this)">
+        <div class="product-top">
+          <div>
+            <div class="product-name">XECM</div>
+            <div class="product-tagline">"SAP bina khole, docs mil jayenge"</div>
+          </div>
+          <span class="product-price">SHIPPED</span>
+        </div>
+        <span class="tap">details</span>
+        <div class="product-details">
+          <div class="voice-label exp">Experienced™ says</div>
+          <p class="exp-voice">Delivered <strong>Extended ECM integration</strong> enabling seamless access to SAP repository documents within the OpenText ecosystem — eliminating context switching and improving cross-system operational efficiency.</p>
+          <div class="voice-label naman">Naman says</div>
+          <p class="naman-voice">SAP alag kholo, OpenText alag kholo — ye sab band. Ek hi env mein SAP ke documents. Time bachega, sanity bachegi.</p>
+        </div>
+      </div>
+
+      <div class="pay-checkout">
+        <div class="pay-head">
+          <h3>DODO Hire Checkout</h3>
+          <span class="pay-secure">Secure</span>
+        </div>
+        <div class="pay-rows">
+          <div class="pay-row"><span>Candidate</span><span>Naman Jain</span></div>
+          <div class="pay-row"><span>Role</span><span>Technical Project Manager</span></div>
+          <div class="pay-row"><span>Delivery speed</span><span>Immediate</span></div>
+          <div class="pay-row"><span>Cost vs Experienced™</span><span>Lower</span></div>
+          <div class="pay-row"><span>Output vs Experienced™</span><span>Higher</span></div>
+          <div class="pay-row"><span>Startup growth fit</span><span>Optimized</span></div>
+          <div class="pay-row"><span>Salary ask</span><span id="paySalary">Flexible</span></div>
+          <div class="pay-row total"><span>You pay</span><span id="payTotal">Busy &gt; Money</span></div>
+        </div>
+        <div class="slider-box">
+          <label><span>Founder budget slider</span><strong id="budgetLabel">Modest & fair</strong></label>
+          <input type="range" id="salarySlider" min="0" max="100" value="25" />
+          <p class="slider-msg" id="sliderMsg">Paise kam dedena, koi baat nahi — bas kaam do.</p>
+        </div>
+        <div class="pay-methods">
+          <span class="pay-method on">UPI: Busy&gt;Money</span>
+          <span class="pay-method">Card: Skills</span>
+          <span class="pay-method">Netbanking: Trust</span>
+          <span class="pay-method">EMI: N/A</span>
+        </div>
+        <div class="pay-footer">Payment status: <strong>Awaiting founder to complete hire</strong></div>
+      </div>
+
+      <div class="hinglish">
+        <div class="big">"Rakh lo please"</div>
+        <p>
+          Paise kam dedena, koi baat nahi —<br>
+          <strong>bas mujhe busy rehna hai.</strong><br>
+          Idle hands? Not my thing. Give me work, I'll give you results.
+        </p>
+      </div>
+
+      <div class="card">
+        <span class="status-chip active">Included free</span>
+        <h3>What you get when you hire Naman</h3>
+        <ul class="check-list">
+          <li>Projects delivered on time, every time</li>
+          <li>Teams that actually communicate</li>
+          <li>Outcome-focused, not process theatre</li>
+          <li>Flexible salary, zero flexibility on quality</li>
+          <li>Your life gets easier — guaranteed side effect</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="cta" id="cta">
+      <h2>So... rakh loge?</h2>
+      <div class="hire-letter" id="hireLetter">
+        <p>Dear Ayush,</p>
+        <p>As a founder, you pitch until you get funding — right? I'm doing the same thing.</p>
+        <p>Please, ek demo kar lete hain — <strong>1 week</strong>. I will not ask for pay. I will prove it. And if I fail, I will not ask for anything.</p>
+        <p class="punch">Low pay &lt; Exp · Better work &gt; Exp · Startup growth — I'm that hire.</p>
+        <p class="sig">Best regards,<br>Naman Jain</p>
+      </div>
+      <p class="sub">Tap Hire Me — opens Gmail to Naman from you (Ayush). Review and send.</p>
+      <button class="pay-btn" id="hireBtn">Hire Me</button>
+      <div class="links">
+        <a href="https://www.linkedin.com/in/naman-jain-b53899137/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://github.com/FoundersMind" target="_blank" rel="noopener">GitHub</a>
+        <a href="mailto:naman20jain04@gmail.com">naman20jain04@gmail.com</a>
+      </div>
+    </div>
+
+    <footer>Made with hope, hustle & DODO energy — Naman © 2026</footer>
+  </div>
+
+  <script>
+    const HIRE_EMAIL = 'naman20jain04@gmail.com';
+    const HIRE_SUBJECT = 'Opportunity Discussion — Naman Jain | Project Manager';
+    const HIRE_BODY = `Dear Naman,
+
+I reviewed your portfolio and would like to discuss an opportunity with you.
+
+I am impressed by your project management experience — particularly your delivery across AgentBenchx, AI Log Analyzer, Documentum, and XECM. I would like to take you up on your one-week demonstration proposal and explore how you can contribute to our team.
+
+Please let me know your availability for a brief call this week so we can align on next steps.
+
+Looking forward to connecting.
+
+Best regards,
+Ayush Agrawal`;
+
+    function openGmailCompose(to, subject, body) {
+      let url = 'https://mail.google.com/mail/?view=cm&fs=1'
+        + '&su=' + encodeURIComponent(subject)
+        + '&body=' + encodeURIComponent(body);
+      if (to) url += '&to=' + encodeURIComponent(to);
+      window.open(url, '_blank', 'noopener,noreferrer');
+    }
+
+    document.getElementById('hireBtn').addEventListener('click', (e) => {
+      e.preventDefault();
+      openGmailCompose(HIRE_EMAIL, HIRE_SUBJECT, HIRE_BODY);
+    });
+
+    const tiers = [
+      { max: 15, label: 'Startup budget', msg: 'Chalega bhai. Equity + busy rehna — deal.', pay: '₹ Modest', total: 'High ROI' },
+      { max: 35, label: 'Modest & fair', msg: 'Paise kam dedena, koi baat nahi — bas kaam do.', pay: 'Flexible', total: 'Busy > Money' },
+      { max: 55, label: 'Market rate', msg: 'Fair offer? Main over-deliver karunga, promise.', pay: 'Market rate', total: 'Great value' },
+      { max: 75, label: 'Generous', msg: 'Waah founder! Weekends bhi ship kar dunga.', pay: 'Premium', total: 'Worth every rupee' },
+      { max: 100, label: 'Founder energy', msg: 'Itna? Production pe sleep deploy kar dunga aapke liye.', pay: 'Top tier', total: 'Priceless hire' }
+    ];
+
+    const slider = document.getElementById('salarySlider');
+    function updateSalary() {
+      const v = +slider.value;
+      const t = tiers.find(x => v <= x.max) || tiers.at(-1);
+      document.getElementById('budgetLabel').textContent = t.label;
+      document.getElementById('sliderMsg').textContent = t.msg;
+      document.getElementById('paySalary').textContent = t.pay;
+      document.getElementById('payTotal').textContent = t.total;
+    }
+    slider.addEventListener('input', updateSalary);
+
+    function toggleProduct(el) {
+      const open = el.classList.contains('open');
+      document.querySelectorAll('.product-card').forEach(c => c.classList.remove('open'));
+      if (!open) el.classList.add('open');
+    }
+
+    let clicks = 0;
+    const TOTAL_CLICKS = 3;
+
+    const btnLabels = [
+      'Click to unlock',
+      'One more click',
+      'Final click — unlock all'
+    ];
+
+    const statusMsgs = [
+      'Nice. One more click.',
+      'Almost there. One last click.',
+      'Unlocked. Scroll down — your move, founder.'
+    ];
+
+    function updateDots(n) {
+      document.querySelectorAll('#clickDots span').forEach((dot, i) => {
+        dot.classList.toggle('on', i < n);
+      });
+    }
+
+    function revealStory() {
+      clicks++;
+      const status = document.getElementById('clickStatus');
+      const btn = document.getElementById('mainBtn');
+      const reveal = document.getElementById('reveal');
+      const cta = document.getElementById('cta');
+
+      updateDots(clicks);
+      status.textContent = statusMsgs[Math.min(clicks - 1, statusMsgs.length - 1)];
+
+      if (clicks < TOTAL_CLICKS) {
+        btn.textContent = btnLabels[clicks];
+        confetti(clicks === 1 ? 12 : 18);
+      } else if (clicks >= TOTAL_CLICKS) {
+        reveal.classList.add('visible');
+        cta.classList.add('visible');
+        btn.style.display = 'none';
+        document.getElementById('clickDots').style.display = 'none';
+        document.getElementById('screenOne').style.minHeight = 'auto';
+        document.getElementById('screenOne').style.padding = '0.5rem 0';
+        updateSalary();
+        confetti(45);
+      }
+    }
+
+    function confetti(n) {
+      const colors = ['#07BC70', '#b8ff57', '#ff4d9d', '#fbbf24', '#8b5cf6'];
+      for (let i = 0; i < n; i++) {
+        const el = document.createElement('div');
+        el.className = 'confetti';
+        el.style.cssText = `left:${Math.random()*100}vw;top:-8px;width:${6+Math.random()*8}px;height:${6+Math.random()*8}px;background:${colors[i%colors.length]};border-radius:${Math.random()>0.5?'50%':'2px'};animation-duration:${1+Math.random()}s`;
+        document.body.appendChild(el);
+        setTimeout(() => el.remove(), 2000);
+      }
+    }
+  </script>
+</body>
+</html>
